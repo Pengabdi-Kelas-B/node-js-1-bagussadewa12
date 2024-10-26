@@ -9,7 +9,6 @@ const rl = readline.createInterface({
 
 const app = {};
 
-// Fungsi untuk membuat folder
 app.makeFolder = () => {
   rl.question('Masukkan Nama Folder: ', (folderName) => {
     fs.mkdir(path.join(__dirname, folderName), { recursive: true }, (err) => {
@@ -23,7 +22,6 @@ app.makeFolder = () => {
   });
 };
 
-// Fungsi untuk membuat file baru
 app.makeFile = () => {
   rl.question('Masukkan Nama File: ', (fileName) => {
     rl.question('Masukkan Isi File: ', (content) => {
@@ -39,7 +37,6 @@ app.makeFile = () => {
   });
 };
 
-// Fungsi untuk mengatur file berdasarkan ekstensi ke dalam subfolder
 app.extSorter = () => {
   const sourceFolder = path.join(__dirname, 'unorganize_folder');
   fs.readdir(sourceFolder, (err, files) => {
@@ -50,9 +47,8 @@ app.extSorter = () => {
 
     files.forEach((file) => {
       const ext = path.extname(file).slice(1);
-      if (!ext) return; // Abaikan file tanpa ekstensi
+      if (!ext) return;
 
-      // Tentukan folder ekstensi di luar unorganize_folder
       const extFolder = path.join(__dirname, ext);
       fs.mkdir(extFolder, { recursive: true }, (err) => {
         if (err) {
@@ -75,7 +71,6 @@ app.extSorter = () => {
   });
 };
 
-// Fungsi untuk membaca isi folder dengan format yang ditentukan
 app.readFolder = () => {
   rl.question('Masukkan Path Folder: ', (folderPath) => {
     fs.readdir(folderPath, { withFileTypes: true }, (err, files) => {
@@ -86,25 +81,24 @@ app.readFolder = () => {
 
       const details = files.map((file) => {
         const filePath = path.join(folderPath, file.name);
-        const stats = fs.statSync(filePath); // Mengambil statistik file
+        const stats = fs.statSync(filePath);
 
         return {
           namaFile: file.name,
-          extensi: path.extname(file.name).slice(1) || 'tidak ada', // Mengambil ekstensi
+          extensi: path.extname(file.name).slice(1) || 'tidak ada',
           jenisFile: file.isDirectory() ? 'folder' : path.extname(file.name).slice(1) === 'jpg' || path.extname(file.name).slice(1) === 'png' ? 'gambar' : 'text',
-          tanggalDibuat: stats.birthtime.toISOString().split('T')[0], // Format tanggal
-          ukuranFile: `${(stats.size / 1024).toFixed(2)}kb`, // Menghitung ukuran file dalam KB
+          tanggalDibuat: stats.birthtime.toISOString().split('T')[0],
+          ukuranFile: `${(stats.size / 1024).toFixed(2)}kb`,
         };
       });
 
       console.log(`Berhasil menampilkan isi dari folder ${folderPath}:`);
-      console.log(JSON.stringify(details, null, 4)); // Mengubah objek ke format JSON dan menampilkannya
+      console.log(JSON.stringify(details, null, 4));
       rl.close();
     });
   });
 };
 
-// Fungsi untuk membaca isi file (hanya mendukung file teks)
 app.readFile = () => {
   rl.question('Masukkan Path File: ', (filePath) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
