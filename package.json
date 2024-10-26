@@ -1,16 +1,21 @@
 {
   "name": "tugas_week_7_nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node.js CLI application for file management tasks.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "make-folder" : "node index.js make-folder",
-    "make-file" : "",
-    "ext-sorter" : "",
-    "read-folder" : ""
+    "make-folder": "node index.js make-folder",
+    "make-file": "node index.js make-file",
+    "ext-sorter": "node index.js ext-sorter",
+    "read-folder": "node index.js read-folder",
+    "read-file": "node index.js read-file"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Node.js",
+    "CLI",
+    "file management"
+  ],
+  "author": "bagus-sadewa",
   "license": "ISC"
 }
